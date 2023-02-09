@@ -1,24 +1,32 @@
+import { crawler } from "@/crawler/crawler"
 import { getBooks } from "@/crawler/getBooks"
 import { logIn } from "@/crawler/logIn"
-import { setUp } from "@/crawler/setUp"
+import { GoodreadsBook } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
+import ow from "ow"
 
-type Data = {
-  name: string
-}
+type Data = GoodreadsBook[]
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
   const { username, password } = req.body
+  ow(username, ow.string)
+  ow(password, ow.string)
 
-  // TODO: Assert username & password
+  // Start crawler
+  const { page } = await crawler.up()
 
-  // const crawler = await setUp()
-  // const userId = await logIn({ username, password, crawler })
-  // const books = await getBooks({ userId })
-  const books = await getBooks({ userId: "392145" })
+  const userId = await logIn({ username, password, page })
+  const books = await getBooks({ userId, page, res })
+  // const books = await getBooks({ userId: "392145", page, res })
 
-  res.status(200).json({ name: "John Doe" })
+  // TODO: Progress bar
+  // TODO: Return books JSON for CSV
+
+  // Close crawler before ending
+  await crawler.down(page)
+
+  res.status(200).json(books)
 }

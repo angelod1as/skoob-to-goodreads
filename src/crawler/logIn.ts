@@ -1,17 +1,13 @@
 import { LOGIN_URL } from "@/helpers/constants"
-import { Crawler } from "./setUp"
+import { Crawler, crawler } from "./crawler"
 
 type LogInProps = {
   username: string
   password: string
-  crawler: Crawler
+  page: Crawler["page"]
 }
 
-export const logIn = async ({
-  username,
-  password,
-  crawler: { page },
-}: LogInProps) => {
+export const logIn = async ({ username, password, page }: LogInProps) => {
   await page.goto(LOGIN_URL)
 
   await page.type("#UsuarioEmail", username)

@@ -51,14 +51,7 @@ export type GoodreadsBook = {
   Author: string
   ISBN: string
   "My Rating": string
-  "Average Rating": string
   Publisher: string
-  Binding: string
   "Year Published": string
-  "Original Publication Year": string
   "Date Read": string
-  "Date Added": string
-  Shelves: string
-  Bookshelves: string
-  "My Review": string
 }

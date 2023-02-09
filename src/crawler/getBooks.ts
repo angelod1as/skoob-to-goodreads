@@ -1,55 +1,64 @@
 import { LIMIT } from "@/helpers/constants"
 import { generateBookcaseUrl } from "@/helpers/generateUrl"
 import { GoodreadsBook, SkoobBook } from "@/types"
+import { fetchIsbn } from "./fetchIsbn"
+import { Crawler } from "./crawler"
 import { fetchPages } from "./fetchPages"
-import { getIsbn } from "./getIsbn"
+import { NextApiResponse } from "next"
 
 type GetBooksProps = {
   userId: string
+  page: Crawler["page"]
+  res: NextApiResponse<GoodreadsBook[]>
 }
 
-export const getBooks = async ({ userId }: GetBooksProps) => {
-  // get books number:
-  const pages = await fetchPages(userId)
+export const getBooks = async ({ userId, page, res }: GetBooksProps) => {
+  const numberOfPages = await fetchPages(userId)
+  const pageCounter = [...Array(numberOfPages)]
 
-  const books = [...Array(pages)].map(async (_, index) => {
-    const it = await fetchBooks({ page: index + 1, userId })
-  })
+  const goodreadsBooks: GoodreadsBook[] = []
 
-  return
-}
+  for (const index in pageCounter) {
+    const currentPage = parseInt(index) + 1
 
-type FetchBooksProps = {
-  page: number
-  userId: string
-}
-const fetchBooks = async ({ page, userId }: FetchBooksProps) => {
-  const bookcase = generateBookcaseUrl(userId, page, LIMIT)
+    console.log(`page ${currentPage} of ${pageCounter.length}`)
 
-  try {
-    const response = await fetch(bookcase)
-    const result = await response.json()
+    const bookcase = generateBookcaseUrl(userId, currentPage, LIMIT)
 
-    if (!result.success) {
-      throw new Error("No bookcase found")
-    }
+    try {
+      const response = await fetch(bookcase)
+      const result = await response.json()
 
-    const books: SkoobBook[] = result.response
-
-    const it = books.map((book) => {
-      const edition = book.edicao
-
-      const abc: GoodreadsBook = {
-        Title: edition.titulo,
-        Author: edition.autor,
-        ISBN: getIsbn(edition.url),
+      if (!result.success) {
+        throw new Error("No bookcase found")
       }
-    })
 
-    return {
-      title: books,
+      const AllBooks: SkoobBook[] = result.response
+
+      // I use for*in instead of map because of async calls
+      for (const element in AllBooks) {
+        const book = AllBooks[element]
+        const edition = book.edicao
+
+        console.log(`book ${parseInt(element) + 1} of ${AllBooks.length}`)
+
+        const goodreadsBook: GoodreadsBook = {
+          Title: edition.titulo,
+          Author: edition.autor,
+          Publisher: edition.editora,
+          ISBN: await fetchIsbn({ page, url: edition.url }),
+          "Date Read": book.dt_leitura,
+          "My Rating": book.ranking.toString(),
+          "Year Published": edition.ano.toString(),
+        }
+
+        goodreadsBooks.push(goodreadsBook)
+      }
+    } catch (error) {
+      console.log(":DEV error: ", error)
+      throw new Error(error as string)
     }
-  } catch (error) {
-    throw new Error(error as string)
   }
+
+  return goodreadsBooks
 }
