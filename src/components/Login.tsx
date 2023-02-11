@@ -29,7 +29,8 @@ const inputs: InputData[] = [
 ]
 
 export const Login = () => {
-  const [loading, setLoading] = useState(false)
+  const [fetching, setFetching] = useState(false)
+  const [status, setStatus] = useState("")
 
   const {
     register,
@@ -38,18 +39,56 @@ export const Login = () => {
   } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setLoading(true)
+    setFetching(true)
+    setStatus("Iniciando o processo")
 
-    await fetch("/api/skoob", { method: "POST", body: JSON.stringify(data) })
+    setStatus("Buscando ID de usuário")
 
-    setLoading(false)
+    // TODO: handle wrong user/pass
+    // TODO: Add Try/Catches to >ALL<
+    const userIdResponse = await fetch("/api/skoob/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+    const { userId } = await userIdResponse.json()
+
+    setStatus(`ID ${userId} encontrado. Buscando número de livros`)
+
+    const bookNumberResponse = await fetch("/api/skoob/bookcase", {
+      method: "POST",
+      body: JSON.stringify({ userId }),
+    })
+    const { bookNumber } = await bookNumberResponse.json()
+
+    setStatus(
+      `Exportando ${bookNumber} livros. Isso pode demorar um pouco, vá buscar um café.`,
+    )
+
+    const books = await fetch("/api/skoob", {
+      method: "POST",
+      body: JSON.stringify({ userId }),
+    })
+
+    setStatus(`Gerando e baixando arquivo...`)
+
+    const blob = await books.blob()
+    var objectUrl = URL.createObjectURL(blob)
+
+    var a = document.createElement("a")
+    a.download = "books.csv"
+    a.href = objectUrl
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+
+    setFetching(false)
   }
 
-  if (loading) {
+  if (fetching) {
     return (
       <div>
         <p className="text-2xl">Carregando...</p>
-        <p>(Vá buscar um café. Isso pode demorar)</p>
+        <p>{status}</p>
       </div>
     )
   }

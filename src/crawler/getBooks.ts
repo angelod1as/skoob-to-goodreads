@@ -4,16 +4,14 @@ import { GoodreadsBook, SkoobBook } from "@/types"
 import { fetchIsbn } from "./fetchIsbn"
 import { Crawler } from "./crawler"
 import { fetchPages } from "./fetchPages"
-import { NextApiResponse } from "next"
 
 type GetBooksProps = {
   userId: string
   page: Crawler["page"]
-  res: NextApiResponse<GoodreadsBook[]>
 }
 
-export const getBooks = async ({ userId, page, res }: GetBooksProps) => {
-  const numberOfPages = await fetchPages(userId)
+export const getBooks = async ({ userId, page }: GetBooksProps) => {
+  const { numberOfPages } = await fetchPages(userId)
   const pageCounter = [...Array(numberOfPages)]
 
   const goodreadsBooks: GoodreadsBook[] = []

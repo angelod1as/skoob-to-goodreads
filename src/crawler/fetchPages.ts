@@ -6,7 +6,6 @@ export const fetchPages = async (userId: string) => {
 
   console.log("Generating bookcase URL")
   const bookcase = generateBookcaseUrl(userId, 0, 1)
-  console.log("Bookcase URL: ", bookcase)
 
   try {
     console.log("Fetching bookcase")
@@ -22,7 +21,7 @@ export const fetchPages = async (userId: string) => {
     const pages = Math.ceil(total / LIMIT)
     console.log(`Pages: ${pages}`)
 
-    return pages
+    return { numberOfPages: pages, numberOfBooks: total }
   } catch (error) {
     throw new Error(error as string)
   }
