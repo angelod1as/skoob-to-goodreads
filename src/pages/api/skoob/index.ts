@@ -11,7 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  console.log("STARTING")
+  console.log("STARTING TO FETCH")
   const { username, password } = JSON.parse(req.body)
   ow(username, ow.string)
   ow(password, ow.string)
