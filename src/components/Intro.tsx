@@ -3,23 +3,28 @@ import { Link } from "./Link"
 
 export const Intro = () => {
   return (
-    <div className="flex flex-col max-w-lg gap-4 text-center">
+    <div className="flex flex-col gap-8">
       <div>
-        <h2>Transfira já seus livros do Skoob para o Goodreads</h2>
-        <p>
-          Nosso site não guarda <span>nenhuma</span> informação dos usuários —
-          você pode checar o código no <Link href="">GitHub</Link> para ter
-          certeza.
-        </p>
+        <h2 className="text-2xl">
+          Transfira seus livros do Skoob para o Goodreads
+        </h2>
       </div>
       <div>
-        <h2>Como usar:</h2>
-        <ol>
-          <li>Insira seu email e senha do Skoob abaixo</li>
+        <h3 className="mb-2 text-xl">Como usar:</h3>
+        <ol className="flex flex-col gap-1 list-decimal">
+          <li>
+            Insira seu email e senha do Skoob abaixo
+            <br /> (Nós não guardamos nenhum dado.{" "}
+            <Link href="/como-funciona" inner>
+              Leia mais
+            </Link>
+            )
+          </li>
           <li>Clique em Enviar</li>
           <li>Aguarde um pouquinho</li>
-          <li>Importe o arquivo gerado no GoodReads</li>
           <li>
+            Importe o arquivo gerado no GoodReads
+            <br />
             <Link href="/como-funciona" inner>
               Clique aqui para um tutorial mais detalhado
             </Link>

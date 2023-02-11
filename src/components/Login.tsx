@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 type FormData = {
@@ -28,19 +28,37 @@ const inputs: InputData[] = [
   },
 ]
 
-const onSubmit: SubmitHandler<FormData> = async (data) => {
-  await fetch("/api/skoob", { method: "POST", body: JSON.stringify(data) })
-}
-
 export const Login = () => {
+  const [loading, setLoading] = useState(false)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
 
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setLoading(true)
+
+    await fetch("/api/skoob", { method: "POST", body: JSON.stringify(data) })
+
+    setLoading(false)
+  }
+
+  if (loading) {
+    return (
+      <div>
+        <p className="text-2xl">Carregando...</p>
+        <p>(Vá buscar um café. Isso pode demorar)</p>
+      </div>
+    )
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col w-full gap-4"
+    >
       {inputs.map(({ label, name, placeholder, type }) => (
         <div key={name} className="flex flex-col gap-1">
           <label className="font-bold" htmlFor={name}>

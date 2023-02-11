@@ -8,9 +8,11 @@ export const Home = () => {
   return (
     <>
       <Header />
-      <main className="flex flex-col items-center justify-center w-full h-full gap-8 p-4 bg-beige-body">
-        <Intro />
-        <Login />
+      <main className="flex flex-col items-center justify-center w-full h-full p-4 bg-beige-body">
+        <div className="flex flex-col max-w-lg gap-8">
+          <Intro />
+          <Login />
+        </div>
       </main>
       <Footer />
     </>
