@@ -21,7 +21,6 @@ export const Login = () => {
   } = useForm<FormData>()
 
   const onSubmit: SubmitHandler<FormData> = (data) => console.log(data)
-  console.log(errors)
 
   const inputs: InputData[] = [
     {
@@ -49,8 +48,14 @@ export const Login = () => {
             className="px-4 py-2 border rounded"
             type={type}
             placeholder={placeholder}
-            {...register(name, { required: true, maxLength: 100 })}
+            {...register(name, {
+              required: `${name} required`,
+              maxLength: 100,
+            })}
           />
+          {errors[name] && (
+            <p className="text-red-600">{errors[name]?.message}</p>
+          )}
         </div>
       ))}
 
