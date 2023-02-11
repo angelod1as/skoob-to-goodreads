@@ -1,15 +1,64 @@
 import React from "react"
-import { Link } from "./Link"
+import { SubmitHandler, useForm } from "react-hook-form"
+
+type FormData = {
+  username: string
+  password: string
+}
+
+type InputData = {
+  label: string
+  type: string
+  placeholder: string
+  name: keyof FormData
+}
 
 export const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>()
+
+  const onSubmit: SubmitHandler<FormData> = (data) => console.log(data)
+  console.log(errors)
+
+  const inputs: InputData[] = [
+    {
+      label: "Email",
+      type: "email",
+      placeholder: "Username",
+      name: "username",
+    },
+    {
+      label: "Senha",
+      type: "password",
+      placeholder: "Password",
+      name: "password",
+    },
+  ]
+
   return (
-    <div className="flex flex-col max-w-lg gap-4 text-center">
-      <p>Transfira já seus livros do Skoob para o Goodreads</p>
-      <p>
-        Nosso site não guarda <span>nenhuma</span> informação dos usuários —
-        você pode checar o código no <Link href="">GitHub</Link> para ter
-        certeza.
-      </p>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      {inputs.map(({ label, name, placeholder, type }) => (
+        <div key={name} className="flex flex-col gap-1">
+          <label className="font-bold" htmlFor={name}>
+            {label}
+          </label>
+          <input
+            className="px-4 py-2 border rounded"
+            type={type}
+            placeholder={placeholder}
+            {...register(name, { required: true, maxLength: 100 })}
+          />
+        </div>
+      ))}
+
+      <input
+        type="submit"
+        value="Enviar"
+        className="px-4 py-2 transition border rounded bg-beige-header hover:bg-stone-200"
+      />
+    </form>
   )
 }
