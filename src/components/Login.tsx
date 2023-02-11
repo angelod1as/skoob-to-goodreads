@@ -13,29 +13,31 @@ type InputData = {
   name: keyof FormData
 }
 
+const inputs: InputData[] = [
+  {
+    label: "Email",
+    type: "email",
+    placeholder: "Username",
+    name: "username",
+  },
+  {
+    label: "Senha",
+    type: "password",
+    placeholder: "Password",
+    name: "password",
+  },
+]
+
+const onSubmit: SubmitHandler<FormData> = async (data) => {
+  await fetch("/api/skoob", { method: "POST", body: JSON.stringify(data) })
+}
+
 export const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
-
-  const onSubmit: SubmitHandler<FormData> = (data) => console.log(data)
-
-  const inputs: InputData[] = [
-    {
-      label: "Email",
-      type: "email",
-      placeholder: "Username",
-      name: "username",
-    },
-    {
-      label: "Senha",
-      type: "password",
-      placeholder: "Password",
-      name: "password",
-    },
-  ]
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">

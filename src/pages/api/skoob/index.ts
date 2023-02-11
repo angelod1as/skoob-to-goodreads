@@ -11,7 +11,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  const { username, password } = req.body
+  console.log("STARTING")
+  const { username, password } = JSON.parse(req.body)
   ow(username, ow.string)
   ow(password, ow.string)
 
