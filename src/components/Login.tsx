@@ -1,7 +1,11 @@
 import React, { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { toast } from "react-toastify"
+import { fetchBookNumber } from "./Login/fetchBookNumber"
+import { fetchBooks } from "./Login/fetchBooks"
+import { fetchUserId } from "./Login/fetchUserId"
 
-type FormData = {
+export type FormData = {
   username: string
   password: string
 }
@@ -30,7 +34,6 @@ const inputs: InputData[] = [
 
 export const Login = () => {
   const [fetching, setFetching] = useState(false)
-  const [status, setStatus] = useState("")
 
   const {
     register,
@@ -40,47 +43,39 @@ export const Login = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setFetching(true)
-    setStatus("Iniciando o processo")
 
-    setStatus("Buscando ID de usuário")
+    toast.info("Iniciando o processo")
+    toast.info("Buscando ID de usuário...")
 
-    // TODO: handle wrong user/pass
-    // TODO: Add Try/Catches to >ALL<
-    const userIdResponse = await fetch("/api/skoob/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-    })
-    const { userId } = await userIdResponse.json()
+    const userId = await fetchUserId(data)
 
-    setStatus(`ID ${userId} encontrado. Buscando número de livros`)
+    toast.info(`ID ${userId} encontrado. Buscando número de livros`)
 
-    const bookNumberResponse = await fetch("/api/skoob/bookcase", {
-      method: "POST",
-      body: JSON.stringify({ userId }),
-    })
-    const { bookNumber } = await bookNumberResponse.json()
+    const bookNumber = fetchBookNumber(userId)
 
-    setStatus(
+    toast.info(
       `Exportando ${bookNumber} livros. Isso pode demorar um pouco, vá buscar um café.`,
     )
 
-    const books = await fetch("/api/skoob", {
-      method: "POST",
-      body: JSON.stringify({ userId }),
-    })
+    const booksUrl = await fetchBooks(userId)
 
-    setStatus(`Gerando e baixando arquivo...`)
+    if (!booksUrl) {
+      toast.error(
+        "Algo deu errado ao gerar sua lista de livros. Contate o desenvolvedor ou tente mais tarde",
+      )
+      return
+    }
 
-    const blob = await books.blob()
-    var objectUrl = URL.createObjectURL(blob)
+    toast.info(`Gerando e baixando arquivo...`)
 
     var a = document.createElement("a")
     a.download = "books.csv"
-    a.href = objectUrl
+    a.href = booksUrl
     document.body.appendChild(a)
     a.click()
     a.remove()
 
+    toast.success(`Arquivo gerado com sucesso`)
     setFetching(false)
   }
 
@@ -88,7 +83,6 @@ export const Login = () => {
     return (
       <div>
         <p className="text-2xl">Carregando...</p>
-        <p>{status}</p>
       </div>
     )
   }
