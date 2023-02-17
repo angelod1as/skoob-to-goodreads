@@ -1,6 +1,6 @@
 import { toast } from "react-toastify"
 
-type FetchBookNumber = (userId: string) => Promise<string | undefined>
+type FetchNumberOfBooks = (userId: string) => Promise<number | undefined>
 
 const notifyError = () =>
   toast.error(
@@ -10,19 +10,19 @@ const notifyError = () =>
     },
   )
 
-export const fetchBookNumber: FetchBookNumber = async (userId) => {
+export const fetchNumberOfBooks: FetchNumberOfBooks = async (userId) => {
   try {
-    const bookNumberResponse = await fetch("/api/skoob/bookcase", {
+    const numberOfBooksResponse = await fetch("/api/skoob/bookcase", {
       method: "POST",
       body: JSON.stringify({ userId }),
     })
 
-    if (!bookNumberResponse.ok) {
+    if (!numberOfBooksResponse.ok) {
       notifyError()
     }
 
-    const { bookNumber } = await bookNumberResponse.json()
-    return bookNumber
+    const { numberOfBooks } = await numberOfBooksResponse.json()
+    return numberOfBooks
   } catch (error) {
     notifyError()
 

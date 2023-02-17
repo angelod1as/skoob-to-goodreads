@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <ToastContainer
+        autoClose={false}
         progressStyle={{
           background: "rgba(244, 241, 234, 1)", // Beige Header
         }}

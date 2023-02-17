@@ -1,7 +1,4 @@
-import { crawler } from "@/crawler/crawler"
-import { getBooks } from "@/crawler/getBooks"
 import { getNumberOfBooks } from "@/crawler/getNumberOfBooks"
-import { GoodreadsBook } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
 // @ts-ignore
 import ow from "ow"

@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 // import toast from "react-hot-toast"
-import { fetchBookNumber } from "./Login/fetchBookNumber"
+import { fetchNumberOfBooks } from "./Login/fetchNumberOfBooks"
 import { fetchBooks } from "./Login/fetchBooks"
 import { fetchUserId } from "./Login/fetchUserId"
 import { toast } from "react-toastify"
+import { calculateTime } from "@/helpers/calculateTime"
 
 export type FormData = {
   username: string
@@ -55,17 +56,22 @@ export const Login = () => {
       return
     }
 
+    toast.dismiss()
     toast(`ID ${userId} encontrado. Buscando número de livros`)
 
-    const bookNumber = await fetchBookNumber(userId)
+    const numberOfBooks = await fetchNumberOfBooks(userId)
 
-    if (!bookNumber) {
+    if (!numberOfBooks) {
       setFetching(false)
       return
     }
 
+    toast.dismiss()
+
     toast(
-      `Exportando ${bookNumber} livros. Isso pode demorar um pouco, vá buscar um café.`,
+      `Exportando ${numberOfBooks} livros. Isso pode demorar um pouco — ${calculateTime(
+        numberOfBooks,
+      )}. Vá buscar um café.`,
     )
 
     const booksUrl = await fetchBooks(userId)
@@ -75,6 +81,7 @@ export const Login = () => {
       return
     }
 
+    toast.dismiss()
     toast(`Gerando e baixando arquivo...`)
 
     var a = document.createElement("a")
@@ -84,7 +91,7 @@ export const Login = () => {
     a.click()
     a.remove()
 
-    toast.success(`Arquivo gerado com sucesso`)
+    toast.success(`Arquivo gerado com sucesso`, { autoClose: 4000 })
     setFetching(false)
   }
 
