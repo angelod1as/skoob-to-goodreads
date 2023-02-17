@@ -17,16 +17,14 @@ export const logIn: LogIn = async ({ username, password, page }) => {
 
   await page.click(".submit input")
 
-  const error = await page.$(".alert")
+  const foundElement = await page.waitForSelector(".alert, #meu_perfil")
 
-  console.log(error)
+  const className = await page.evaluate((el) => el?.className, foundElement)
 
-  // if (error) {
-  //   console.error("Invalid credentials")
-  //   throw new Error("Invalid credentials")
-  // }
-
-  await page.waitForSelector("#meu_perfil")
+  if (className?.includes("alert")) {
+    console.error("Invalid credentials")
+    throw new Error("Invalid credentials")
+  }
 
   const userId = page.url().split("/").slice(-1).join("").split("-")[0]
 
