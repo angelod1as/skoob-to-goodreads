@@ -13,7 +13,7 @@ export type ErrorMessage = {
 
 export const crawler: CrawlerProps = {
   up: async () => {
-    const browser = await puppeteer.launch({ headless: true })
+    const browser = await puppeteer.launch({ headless: false })
     const page = await browser.newPage()
     await page.setViewport({ width: 1080, height: 1024 })
 

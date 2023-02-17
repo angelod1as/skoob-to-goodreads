@@ -1,11 +1,11 @@
-import toast from "react-hot-toast"
+import { toast } from "react-toastify"
 import { FormData } from "../Login"
 
 type FetchUserId = (data: FormData) => Promise<string | undefined>
 
 const notifyError = () =>
   toast.error("Algo deu errado, cheque suas credenciais e tente novamente.", {
-    duration: 10000,
+    autoClose: false,
   })
 
 export const fetchUserId: FetchUserId = async (data) => {

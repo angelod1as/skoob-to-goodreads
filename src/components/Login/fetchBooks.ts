@@ -1,11 +1,12 @@
-import toast from "react-hot-toast"
+import { toast } from "react-toastify"
+
 type FetchBooks = (userId: string) => Promise<string | undefined>
 
 const notifyError = () =>
   toast.error(
     "Algo deu errado ao gerar sua lista de livros. Contate o desenvolvedor ou tente mais tarde",
     {
-      duration: 10000,
+      autoClose: false,
     },
   )
 

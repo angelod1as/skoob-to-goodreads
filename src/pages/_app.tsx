@@ -1,6 +1,7 @@
 import { ToastContainer } from "react-toastify"
 import { Lato } from "@next/font/google"
 import "@/styles/globals.css"
+import "react-toastify/dist/ReactToastify.css"
 import type { AppProps } from "next/app"
 
 const lato = Lato({
@@ -12,6 +13,11 @@ const lato = Lato({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
+      <ToastContainer
+        progressStyle={{
+          background: "rgba(244, 241, 234, 1)", // Beige Header
+        }}
+      />
       <style jsx global>{`
         html {
           font-family: ${lato.style.fontFamily};

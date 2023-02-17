@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import toast from "react-hot-toast"
+// import toast from "react-hot-toast"
 import { fetchBookNumber } from "./Login/fetchBookNumber"
 import { fetchBooks } from "./Login/fetchBooks"
 import { fetchUserId } from "./Login/fetchUserId"
+import { toast } from "react-toastify"
 
 export type FormData = {
   username: string
@@ -44,8 +45,8 @@ export const Login = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setFetching(true)
 
-    toast("Iniciando o processo")
-    toast("Buscando ID de usuário...")
+    toast.info("Iniciando o processo")
+    toast.info("Buscando ID de usuário...")
 
     const userId = await fetchUserId(data)
 
@@ -95,13 +96,8 @@ export const Login = () => {
     )
   }
 
-  // toast.success("loaded!")
-
-  const notify = () => toast("Wow so easy !")
-
   return (
     <>
-      <button onClick={notify}>Notify !</button>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full gap-4"
