@@ -1,5 +1,5 @@
 import { LOGIN_URL } from "@/helpers/constants"
-import { Crawler } from "./crawler"
+import { Crawler, ErrorMessage } from "./crawler"
 
 type LogInProps = {
   username: string
@@ -7,13 +7,22 @@ type LogInProps = {
   page: Crawler["page"]
 }
 
-export const logIn = async ({ username, password, page }: LogInProps) => {
+type LogIn = (props: LogInProps) => Promise<string>
+
+export const logIn: LogIn = async ({ username, password, page }) => {
   await page.goto(LOGIN_URL)
 
   await page.type("#UsuarioEmail", username)
   await page.type("#UsuarioSenha", password)
 
   await page.click(".submit input")
+
+  const error = await page.$(".alert")
+
+  if (error) {
+    console.error("Invalid credentials")
+    throw new Error("Invalid credentials")
+  }
 
   await page.waitForSelector("#meu_perfil")
 

@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 // @ts-ignore
 import ow from "ow"
 
-type Data = { userId: string }
+type Data = { userId?: string; error?: string }
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,10 +17,15 @@ export default async function handler(
   // Start crawler
   const { page } = await crawler.up()
 
-  const userId = await logIn({ username, password, page })
+  try {
+    const userId = await logIn({ username, password, page })
 
-  // Close crawler before ending
-  await crawler.down(page)
+    // Close crawler before ending
+    await crawler.down(page)
 
-  res.status(200).json({ userId })
+    res.status(200).json({ userId })
+  } catch (error: any) {
+    await crawler.down(page)
+    res.status(500).json({ error: error.message })
+  }
 }

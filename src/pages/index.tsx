@@ -1,5 +1,6 @@
 import { Home } from "@/components/Home"
 import Head from "next/head"
+import { Toaster } from "react-hot-toast"
 
 export default function Index() {
   return (
@@ -14,6 +15,7 @@ export default function Index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Home />
+      <Toaster />
     </>
   )
 }

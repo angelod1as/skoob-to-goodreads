@@ -18,7 +18,6 @@ export default function App({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <Component {...pageProps} />
-      <ToastContainer />
     </>
   )
 }
