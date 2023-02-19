@@ -25,7 +25,7 @@ export const Intro = () => {
           <li>
             Importe o arquivo gerado no GoodReads
             <br />
-            <Link href="/como-funciona" inner>
+            <Link href="/passo-a-passo" inner>
               Clique aqui para um tutorial mais detalhado
             </Link>
           </li>
