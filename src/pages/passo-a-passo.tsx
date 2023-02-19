@@ -1,5 +1,5 @@
 import { Template } from "@/components/Templates"
-import { Tutorial } from "@/components/Tutorial"
+import { Tutorial } from "@/components/Tutorial/Tutorial"
 
 export default function TutorialPage() {
   return (

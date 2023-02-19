@@ -11,7 +11,7 @@ export const Intro = () => {
       </div>
       <div>
         <h3 className="mb-2 text-xl">Como usar:</h3>
-        <ol className="flex flex-col gap-1 list-decimal">
+        <ol className="flex flex-col gap-1 list-decimal list-inside">
           <li>
             Insira seu email e senha do Skoob abaixo
             <br /> (Nós não guardamos nenhum dado.{" "}

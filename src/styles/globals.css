@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 #__next, html, body {
-  @apply w-full h-full;
+  @apply w-full;
 }

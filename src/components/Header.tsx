@@ -3,7 +3,7 @@ import { Link } from "./Link"
 
 export const Header = () => {
   return (
-    <nav className="absolute top-0 left-0 flex justify-between w-full p-4 border border-opacity-10 bg-beige-header border-b-black">
+    <nav className="sticky top-0 left-0 flex justify-between w-full p-4 border border-opacity-10 bg-beige-header">
       <div>
         <Link href="/" inner className="hover:opacity-50">
           <h1 className="text-xl font-light">
