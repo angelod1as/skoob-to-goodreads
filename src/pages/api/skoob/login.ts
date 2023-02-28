@@ -10,11 +10,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
+  console.log("Login route")
   const { username, password } = JSON.parse(req.body)
   ow(username, ow.string)
   ow(password, ow.string)
 
-  // Start crawler
   console.log("Start crawler")
   const { page } = await crawler.up()
 
@@ -23,7 +23,6 @@ export default async function handler(
     const userId = await logIn({ username, password, page })
 
     console.log("Close crawler")
-    // Close crawler before ending
     await crawler.down(page)
 
     console.log("Returning")
