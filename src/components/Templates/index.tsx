@@ -24,7 +24,9 @@ export const Template: FC<TemplateProps> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="flex-1 w-full px-4 bg-beige-body">{children}</main>
+      <main className="flex flex-col items-center justify-center flex-1 w-full px-4 bg-beige-body">
+        <div className="max-w-lg">{children}</div>
+      </main>
       <Footer />
     </div>
   )
