@@ -24,14 +24,19 @@ export type ErrorMessage = {
 
 export const crawler: CrawlerProps = {
   up: async () => {
+    console.log("Setting up crawler path")
     const executablePath =
       (await edgeChromium.executablePath) || LOCAL_CHROME_EXECUTABLE
+    console.log("Crawler path:", executablePath)
 
+    console.log("Launching Puppeteer")
     const browser = await puppeteer.launch({
       executablePath,
       args: edgeChromium.args,
       headless: true,
     })
+
+    console.log("New page")
     const page = await browser.newPage()
     await page.setViewport({ width: 1080, height: 1024 })
 
