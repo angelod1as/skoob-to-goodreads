@@ -16,7 +16,7 @@ export const Template: FC<TemplateProps> = ({
   const headTitle = `${title ? `${title} - ` : ""}Skoob 2 Goodreads`
 
   return (
-    <div className="">
+    <div className="flex flex-col h-full">
       <Head>
         <title>{headTitle}</title>
         <meta name="description" content={description} />
@@ -24,7 +24,7 @@ export const Template: FC<TemplateProps> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="w-full px-4 bg-beige-body">{children}</main>
+      <main className="flex-1 w-full px-4 bg-beige-body">{children}</main>
       <Footer />
     </div>
   )
