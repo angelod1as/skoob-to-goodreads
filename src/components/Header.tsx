@@ -13,8 +13,8 @@ export const Header = () => {
         </Link>
       </div>
       <div className="flex gap-4">
-        <Link href="/passo-a-passo" inner>
-          Passo a passo
+        <Link href="/como-usar" inner>
+          Como usar
         </Link>
         <Link href="/colophon" inner>
           Colophon

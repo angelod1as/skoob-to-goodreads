@@ -15,7 +15,7 @@ export const Intro = () => {
           <li>
             Insira seu email e senha do Skoob abaixo
             <br /> (Nós não guardamos nenhum dado.{" "}
-            <Link href="/como-funciona" inner>
+            <Link href="/colophon" inner>
               Leia mais
             </Link>
             )
@@ -25,7 +25,7 @@ export const Intro = () => {
           <li>
             Importe o arquivo gerado no GoodReads
             <br />
-            <Link href="/passo-a-passo" inner>
+            <Link href="/como-usar" inner>
               Clique aqui para um tutorial mais detalhado
             </Link>
           </li>

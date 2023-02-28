@@ -15,7 +15,7 @@ import img7 from "./7.png"
 export const Tutorial = () => {
   return (
     <div className="flex flex-col gap-4 py-8">
-      <Title>Passo a passo</Title>
+      <Title>Como usar</Title>
 
       <Section>
         <Subtitle>Login</Subtitle>
@@ -23,7 +23,7 @@ export const Tutorial = () => {
           <li>Vá a página inicial</li>
           <li>
             Insira seu login e senha do Skoob.{" "}
-            <Link href="como-funciona">Nós não guardamos nenhum dado seu.</Link>
+            <Link href="colophon">Nós não guardamos nenhum dado seu.</Link>
             <Figure>
               <Image src={img1} alt="" />
             </Figure>

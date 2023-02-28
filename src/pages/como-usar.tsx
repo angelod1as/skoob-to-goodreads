@@ -3,10 +3,7 @@ import { Tutorial } from "@/components/Tutorial/Tutorial"
 
 export default function TutorialPage() {
   return (
-    <Template
-      title="Passo a Passo"
-      description="Passo a passo do Skoob 2 Goodreads"
-    >
+    <Template title="Como usar" description="Como usar do Skoob 2 Goodreads">
       <Tutorial />
     </Template>
   )
