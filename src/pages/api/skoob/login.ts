@@ -15,16 +15,23 @@ export default async function handler(
   ow(password, ow.string)
 
   // Start crawler
+  console.log("Start crawler")
   const { page } = await crawler.up()
 
   try {
+    console.log("Get userID")
     const userId = await logIn({ username, password, page })
 
+    console.log("Close crawler")
     // Close crawler before ending
     await crawler.down(page)
 
+    console.log("Returning")
     res.status(200).json({ userId })
   } catch (error: any) {
+    console.error("Error!", error.message)
+
+    console.log("Close crawler")
     await crawler.down(page)
     res.status(500).json({ error: error.message })
   }
