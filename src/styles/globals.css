@@ -5,3 +5,7 @@
 #__next, html, body {
   @apply w-full h-full;
 }
+
+a {
+  @apply underline hover:opacity-50
+}

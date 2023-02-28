@@ -8,20 +8,16 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "engines": {
-    "node": "14.x"
-  },
   "dependencies": {
-    "@next/font": "13.1.5",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
-    "next": "13.1.5",
+    "next": "12.3.1",
     "ow": "^1.1.1",
-    "chrome-aws-lambda": "10.1.0",
-    "puppeteer-core": "10.1.0",
+    "chrome-aws-lambda": "6.0.0",
+    "puppeteer-core": "6.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.1",
