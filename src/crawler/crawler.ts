@@ -33,7 +33,7 @@ export const crawler: CrawlerProps = {
     const browser = await puppeteer.launch({
       executablePath,
       args: edgeChromium.args,
-      headless: true,
+      headless: false,
     })
 
     console.log("New page")
